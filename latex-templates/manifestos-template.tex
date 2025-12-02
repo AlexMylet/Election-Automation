@@ -1,0 +1,72 @@
+\documentclass{header-footer}
+
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{emoji}
+\usepackage{fontspec}
+\usepackage{hyperref}
+
+\setlist{noitemsep}
+
+\RequirePackage{import}
+
+\setSJCHeader[1.2cm]{logo.png}%
+{St John's College Junior Common Room Returning Officer}%
+{$<{ term }>$ Term $<{ year }>$ $<{ election_type }>$Election$<{ space_plus_by_election_number }>$%
+%<| if general_election_executive_by_elected_positions != []|>%%
+\ and Executive By-Election%
+%<| endif |>%%
+}%
+{Candidate Booklet}
+
+\setSJCFooter{$<{ ro_name }>$, JCR Returning Officer}
+
+\begin{document}
+
+\subsection*{Candidates}
+
+%<| for pos_can in positions_with_candidates |>%
+\subsubsection*{\hyperlink{$<{ pos_can[0].id }>$}{$<{pos_can[0].full_name}>$}}
+\vspace{-5px}
+%<| for candidate in pos_can[1] |>%
+\noindent\emph{$<{candidate.latex_manifesto_name}>$}
+%<| endfor |>%
+\vspace{-10px}
+%<| endfor |>%
+
+%<| if positions_without_candidates |>%
+\vfill
+\noindent\emph{No nominations received for (details on by-elections to be circulated shortly):}
+%<| for pos in positions_without_candidates |>%
+\noindent $<{pos.full_name}>$
+%<| endfor |>%
+\vspace{20pt}
+%<| endif |>%
+
+\break
+
+%<| for pos_can in positions_with_candidates |>%
+\hypertarget{$<{ pos_can[0].id }>$}{}
+%<| for candidate in pos_can[1] |>%
+\begin{minipage}{\linewidth}
+\graphicspath{{./$<{candidate.manifesto_files_path}>$/}}
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+    \vspace{-\intextsep}
+    \centering
+    %$<{"\n"}>$    \includegraphics[width=0.3\textwidth]{$<{candidate.photo_file_name}>$}
+
+\end{wrapfigure}
+\textbf{$<{candidate.latex_manifesto_name}>$ (%
+        Candidate%<|if candidate.multiple_people|>%s%<|endif|>%
+        for $<{pos_can[0].full_name}>$%
+)}
+
+%$<{"\n"}>$\import{$<{candidate.manifesto_files_path}>$/}{$<{candidate.manifesto_latex_file_name}>$}
+\end{minipage}
+\vspace{4ex}
+%<| endfor |>%
+%<| endfor |>%
+
+\end{document}

@@ -1,0 +1,92 @@
+[
+    {
+        "id": "president",
+        "full_name": "President",
+        "description_file": "president.tex",
+        "is_exec": true
+    },
+    {
+        "id": "vp",
+        "full_name": "Vice President",
+        "description_file": "vp.tex",
+        "is_exec": true
+    },
+    {
+        "id": "secretary",
+        "full_name": "Secretary",
+        "description_file": "sec.tex",
+        "is_exec": true
+    },
+    {
+        "id": "treasurer",
+        "full_name": "Treasurer",
+        "description_file": "treasurer.tex",
+        "is_exec": true
+    },
+    {
+        "id": "academic",
+        "full_name": "Academic Affairs Officer",
+        "description_file": "academic.tex"
+    },
+    {
+        "id": "access",
+        "full_name": "Access and Admissions Officer",
+        "description_file": "access.tex"
+    },
+    {
+        "id": "arts",
+        "full_name": "Arts Officer",
+        "description_file": "arts.tex"
+    },
+    {
+        "id": "charities",
+        "full_name": "Charities Officer",
+        "description_file": "charities.tex"
+    },
+    {
+        "id": "dom-sec",
+        "full_name": "Domestic Officers",
+        "description_file": "domestic.tex"
+    },
+    {
+        "id": "entz",
+        "full_name": "Entertainment Officers",
+        "description_file": "entz.tex"
+    },
+    {
+        "id": "ee",
+        "full_name": "Environment and Ethics Officer",
+        "description_file": "ee.tex"
+    },
+    {
+        "id": "equality",
+        "full_name": "Equality and Diversity Officer",
+        "description_file": "ed.tex"
+    },
+    {
+        "id": "it",
+        "full_name": "IT Officer",
+        "description_file": "it.tex"
+    },
+    {
+        "id": "publicity",
+        "full_name": "Publicity Officer",
+        "description_file": "publicity.tex"
+    },
+    {
+        "id": "sports",
+        "full_name": "Sports Officer",
+        "description_file": "sports.tex"
+    },
+    {
+        "id": "welfare",
+        "full_name": "Welfare Officers",
+        "description_file": "welfare.tex",
+        "position_count": 3
+    },
+    {
+        "id": "women",
+        "full_name": "Women and Gender Equality Officer",
+        "description_file": "women.tex"
+    }
+]

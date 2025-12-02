@@ -1,0 +1,18 @@
+You copy the "Nominations Form.docx" document and make:
+
+In the header
+1. Change the Term to {{ term }}
+2. Change the Year to {{ year }}
+3. Change the Election Type to {{ election_type }} {% if general_election_executive_by_elected_positions != [] %}and Executive by-election{% endif %}
+Note: these first three are done in "SMALL CAPS" manually be using a larger font size for the capitals
+4. Adjust font sizing if needed in the Header
+
+5. Change the RO Name in the footer to {{ ro_name }} [This should be your name]
+
+6. Insert the following restrictions in the Restrictions on Candidacy:
+(and ensure the formatting uses Word's lists, rather than these manual/LaTeX ones)
+Note - it might be easier to copy these from the role descriptions pdf
+
+{% for restriction in restrictions %}{{restriction.text}}
+{% endfor %}
+7. Rename the document to reflect the current election cycle (e.g. {{ term_first_letter }}T{{ padded_year_mod_100 }} {{ election_type }} Nominations Form.docx)

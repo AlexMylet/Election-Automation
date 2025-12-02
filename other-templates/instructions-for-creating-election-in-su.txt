@@ -1,0 +1,31 @@
+(WIP - Apologies you'll have to convert dates to actual dates)
+
+Title - {{ term_first_letter }}T {{ padded_year_mod_100 }} {{ election_type }}Election{{ space_plus_by_election_number }}
+
+Display: say Sunday Week {{ polls_open.week }} 00:00 to Monday Week {{ polls_open.week + 1 }} 12:00
+
+Nominations: Sunday Week {{ polls_open.week }} 00:01 to Sunday Week {{ polls_open.week }} 00:02
+
+Online manifesto deadline: Sunday Week {{ polls_open.week }} 00:03
+Paper: same
+
+Basic, Hide (or basic and some text)
+
+Polling: {{ polls_open.day }} Week {{ polls_open.week }} {{ polls_open.time }}
+to {{ polls_close.day }} Week {{ polls_close.week }} {{ polls_close.time }}
+
+Save
+
+Go back, select your organisation, select the election you just created, add posts:
+
+{% for position in positions %}
+
+Add new post: Group: {{ position.full_name }}
+
+Places: {{ position.position_count }}
+
+Manifesto type: Free text
+
+Allow photo
+
+{% endfor %}

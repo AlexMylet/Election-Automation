@@ -1,0 +1,28 @@
+Subject: {{ term_first_letter }}T{{ padded_year_mod_100 }} By-election{{ space_plus_by_election_number }} - Nominations Open!
+
+Dear Members of the JCR,
+
+{{ justification }}, a {{ second_plus_space }}by-election is being held for the position{{ positions_plural_s }} of {{ positions_string }}.
+
+Nominations for {{ positions_string }} are now open.
+
+Nominating yourself is very simple: fill in the attached form and return it to be email attachment along with a photo of yourself.
+
+Full timetable:
+
+* Nominations are open until {{ nominations_deadline_time.time }} {{ nominations_deadline_time.day }} Week {{ nominations_deadline_time.week }}
+* Manifestos/Notice of Poll released on {{ manifestos_release_time.day }} Week {{ manifestos_release_time.week }}
+* Hustings will take place on {{ hustings_time.time }} of {{ hustings_time.day }} Week {{ hustings_time.week }}
+* Polls open at {{ polls_open.time }} {{ polls_open.day }} Week {{ polls_open.week }} (open for 48 hours)
+* Results announced as soon as I have them
+
+If you have any potential issues with the hustings timings please let me know and I will try to accommodate this.
+
+As always, all forms of electoral malpractice are strictly prohibited.
+
+Please send any questions to me via email.
+
+Happy electioning!
+
+{{ ro_name }}
+JCR Returning Officer

@@ -1,0 +1,60 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/alexmylet/Election-Automation/automation/schemas/restrictions.schema.json",
+    "title": "Restrictions",
+    "description": "List of restrictions on who can stand",
+    "$defs" : {
+        "rule": {
+            "type": "object",
+            "properties": {
+                "rule_type": {
+                    "enum": ["multiple_positions", "exec", "all", "specific_roles", "trinity-by"]
+                }
+            },
+            "required": ["rule_type"],
+            "if": {
+                "properties": {
+                    "rule_type": { "const": "specific_roles"}
+                }
+            },
+            "then": {
+                "properties": {
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "id of the role to require"
+                        }
+                    }
+                },
+                "required": ["roles"]
+            }
+        }
+    },
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "Short identifier for rule"
+            },
+            "text": {
+                "type": "string",
+                "description": "Full text, as per the constitution"
+            },
+            "constitution_reference": {
+                "type": "string"
+            },
+            "rule": {
+                "$ref": "#/$defs/rule"
+            },
+            "modified": {
+                "type": "boolean",
+                "default": false,
+                "description": "Text modified from constitution for consistency"
+            }
+        },
+        "required": ["id", "text", "constitution_reference", "rule"]
+    }
+}

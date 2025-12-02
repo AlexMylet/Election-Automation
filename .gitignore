@@ -1,0 +1,15 @@
+elections/*
+!elections/election-general-exec.jsonc
+!elections/election-general.jsonc
+output/*
+latex-out/*
+*.log
+*.aux
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.pdf
+*.pyc
+.vscode/*
+.~lock*.docx#

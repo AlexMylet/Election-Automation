@@ -1,0 +1,8 @@
+{% for pos_can in positions_with_candidates %}
+{% for candidate in pos_can[1] %}
+{{ candidate.email }}
+{% for email in candidate.extra_emails %}
+{{ email }}
+{% endfor %}
+{% endfor %}
+{% endfor %}

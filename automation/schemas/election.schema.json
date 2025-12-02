@@ -1,0 +1,100 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/alexmylet/Election-Automation/automation/schemas/election.schema.json",
+    "title": "Election",
+    "description": "A JCR election",
+    "$defs": {
+        "time": {
+            "type": "object",
+            "properties": {
+                "time": { "type": "string" },
+                "day":  { "enum": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "today", "tomorrow"] },
+                "week": { "type": "number", "minimum": 1, "maximum": 8 }
+            },
+            "required": ["day"]
+        }
+    },
+    "type": "object",
+    "properties": {
+        "roName": {
+            "description": "The Returning Officer's name",
+            "type": "string"
+        },
+        "type": {
+            "description": "The type of an election",
+            "enum": ["exec", "general", "by-election"]
+        },
+        "term": {
+            "description": "The current Oxford Term",
+            "enum": ["Michaelmas", "Hilary", "Trinity"]
+        },
+        "year": {
+            "description": "The current year (optional - if not provided, should default to current year)",
+            "type": "number",
+            "exclusiveMinimum": 0
+        },
+        "committeeYear": {
+            "description": "The year of the committee being elected to (optional - if not provided, should default to current year +1 for general elections, and current year for by-elections",
+            "type": "number",
+            "exclusiveMinimum": 0
+        },
+        "nominationsOpen": {
+            "description": "The timing for nominations to open",
+            "$ref": "#/$defs/time"
+        },
+        "nominationsDeadline": {
+            "description": "The timing for nominations to close",
+            "$ref": "#/$defs/time"
+        },
+        "manifestoReleaseTime": {
+            "description": "The timing for manifesto release",
+            "$ref": "#/$defs/time"
+        },
+        "hustingsTime": {
+            "$ref": "#/$defs/time"
+        },
+        "electionStart": {
+            "$ref": "#/$defs/time"
+        },
+        "electionEnd": {
+            "$ref": "#/$defs/time"
+        },
+        "hustingsLocation": {
+            "type": "string"
+        }
+    },
+    "positions": {
+        "description": "The positions up for election in this by-election/the executive roles that are by-elected in this general election",
+        "type": "array",
+        "items": {
+            "type": "string"
+        },
+        "minItems": 0
+    },
+    "required": ["roName", "type", "term"],
+    "if": {
+        "properties": {
+            "type": { "const": "by-election" }
+        }
+    },
+    "then": {
+        "properties": {
+            "justification": {
+                "description": "An explanation of why the by-election is being held (optional)",
+                "type": "string"
+            },
+            "number": {
+                "description": "The number of that by-election that term (optional)",
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "default": 1
+            },
+            "roleByElectionNumber": {
+                "description": "The number of the by-election for that position (optional)",
+                "enum": [1, 2],
+                "default": 1
+            }
+        },
+        "required": ["positions"]
+    }
+}

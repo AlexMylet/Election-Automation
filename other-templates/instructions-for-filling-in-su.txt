@@ -1,0 +1,33 @@
+Log-in, load the election. Click "Posts"
+
+{% for pos_can in positions_with_candidates %}
+Click on position: {{ pos_can[0].full_name }}
+Click "Candidates"
+{% for candidate in pos_can[1]%}
+
+
+Name (for select candidate): {{ candidate.full_name }}
+
+Name for manifesto {% if candidate.full_name == candidate.manifesto_name %} (NO DIFFERENT TO ABOVE) {%endif%}: {{ candidate.manifesto_name }}
+
+Click "Update profile"
+Click "Submit nomination"
+Click "Candidates (the lower one)"
+
+Click on "edit" on {{ candidate.manifesto_name }}'s line
+
+Upload the photo: Browse for {{ candidate.photo_file_name }}, **then click "Upload"**
+
+Manifesto: {{ candidate.manifesto_text_file_name }}
+(reintroduce formatting as you see fit)
+
+Click "Save"
+
+Click "Candidates"
+{%endfor%}
+Click "Posts"
+{%endfor%}
+Click "Candidates"
+Bulk approve all candidates (this is probably unnecessary, but doesn't hurt)
+
+Change the approval status to approved

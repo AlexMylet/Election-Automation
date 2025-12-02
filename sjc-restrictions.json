@@ -1,0 +1,90 @@
+[
+    {
+        "id": "women",
+        "text": "Candidates for the position of Women's Officer must identify wholly or partly as a woman or transfeminine.",
+        "constitution_reference": "Standing Order Table 3A § 2. a.",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["women"]
+        }
+    },
+    {
+        "id": "pairs",
+        "text": "Candidates for the position of Domestic Officers must run in pairs.",
+        "constitution_reference": "Standing Order Table 3A § 2. b.",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["dom-sec"]
+        }
+    },
+    {
+        "id": "pairs-or-triples",
+        "text": "Candidates for the position of Entertainment Officers must run in pairs or triples.",
+        "constitution_reference": "Standing Order Table 3A § 2. c.",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["entz"]
+        }
+    },
+    {
+        "id": "welfare-woman",
+        "text": "One of the three Welfare Officer positions shall be reserved for members who identify as a woman or a minority gender.",
+        "constitution_reference": "Standing Order Table 3A § 2. d.",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["welfare"]
+        }
+    },
+    {
+        "id": "welfare-man",
+        "text": "One of the three Welfare Officer positions shall be reserved for members who identify as a man or a minority gender.",
+        "constitution_reference": "Standing Order Table 3A § 2. e.",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["welfare"]
+        }
+    },
+    {
+        "id": "single-nomination",
+        "text": "Members who have already nominated for a position in the same set of elections may not nominate themselves again.",
+        "constitution_reference": "Standing Order Table 3A § 2. g.",
+        "rule": {
+            "rule_type": "multiple_positions"
+        },
+        "modified": true
+    },
+    {
+        "id": "no-union-1",
+        "text": "Members who have any position on the following bodies OR any of the following positions are ineligible for nomination to any JCR Officer position:\n\\begin{enumerate}\\setlength{\\itemsep}{1pt}\n\\item Oxford Union Executive Committee (President, Librarian, Treasurer, Secretary)\n\\item Oxford Union Executive Committee Elect (President-Elect, Librarian-Elect, Treasurer-Elect, Secretary-Elect)\n\\item Oxford Union Standing Committee\n\\item Oxford Union Standing Committee Elect\n\\item Oxford Union Senior Appointed Team\n\\item Oxford Union Senior Access Officer\n\\end{enumerate}",
+        "constitution_reference": "Standing Order Table 3A § 2. g. [Broken]",
+        "rule": {
+            "rule_type": "all"
+        }
+    },
+    {
+        "id": "no-union-2",
+        "text": "Members who hold a position on the Oxford Union Secretaries Committee are ineligible for nomination for JCR Exec roles.",
+        "constitution_reference": "Standing Order Table 3A § 2. [Broken]",
+        "rule": {
+            "rule_type": "exec"
+        },
+        "modified": true
+    },
+    {
+        "id": "treasurer",
+        "text": "Members who are Treasurers of a financial beneficiary of the JCR (e.g. Ball Committee), are ineligible for nomination to be JCR Treasurer. ",
+        "constitution_reference": "Standing Order Table 3A § 2. [Broken]",
+        "rule": {
+            "rule_type": "specific_roles",
+            "roles": ["treasurer"]
+        }
+    },
+    {
+        "id": "trinity-by",
+        "text": "No member may be a candidate in a by-election held in Trinity Term in fifth week or later if they are not in residence of St John's College, Oxford for the following Michaelmas Term.",
+        "constitution_reference": "Standing Order Table 3B § 4.",
+        "rule": {
+            "rule_type": "trinity-by"
+        }
+    }
+]

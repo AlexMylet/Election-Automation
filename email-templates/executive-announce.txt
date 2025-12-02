@@ -1,0 +1,54 @@
+Subject: {{ term_first_letter }}T{{ padded_year_mod_100 }} Executive Elections - Nominations
+
+Dear Members of the JCR,
+
+Nominations for the JCR Executive Elections open at {{ nominations_open_time.time }} today!
+
+*If you might stand in a JCR election at any point, please read the information on electoral malpractice at the bottom of this email.*
+
+All members of the JCR are eligible to nominate themselves, unless any of the restrictions in the nomination form/role descriptions apply.
+
+The positions up for election are:
+{% for position in positions %}* {{ position.full_name }}
+{% endfor %}
+Descriptions of these roles can be found in the role description booklet attached to this email. If you have any questions about these roles, you can get in contact with the incumbent, whose details can be found on the JCR website at https://jcr.sjc.ox.ac.uk/jcr-democracy/committee/
+
+Elections for all other JCR Officer positions, except Returning Officer, will be held later this term.
+
+Nominating yourself is very simple: fill in the attached form, return it by email along with a photo of yourself.
+
+Election timetable:
+
+* Nominations are open until {{ nominations_deadline_time.time }} on {{ nominations_deadline_time.day }} Week {{ nominations_deadline_time.week }} (one week from today)
+* Manifestos/Notice of Poll released on {{ manifestos_release_time.day }} Week {{ manifestos_release_time.week }}
+* Hustings will take place in {{ hustings_time.time }} of {{ hustings_time.day }} Week {{ hustings_time.week }}
+* Elections will take place from {{ polls_open.day }} Week {{ polls_open.week }} (open for 48 hours)
+* Results announced as soon as I have them
+
+Please note, voting takes place on the Student Union platform. If you have opted out of SU membership and intend to vote in these elections, please let me know as soon as possible.
+
+Please send any questions to me by email.
+
+All forms of electoral malpractice are strictly prohibited.
+
+The following are listed in the JCR constitution as constituting electoral malpractice regardless of whether an election cycle is currently in progress and may result in disqualification from standing for election or voting in any election or referendum held under this Constitution:
+a. Attempted or actual interference with the online polling system or ballot box, including deliberately hindering an eligible member from casting their ballot.
+b. Impersonation of another voter.
+c. Attempted or actual intimidation or bribery to secure or hinder the nomination of any member as a prospective candidate or the election of any candidate.
+d. Removing manifestos, posters, or other electoral material in an attempt to influence the outcome of any election.
+e. Canvassing in the poll room or loitering outside it for the same purpose.
+f. The dissemination, in print, speech or online, of unsubstantiated statements regarding the integrity or candidature of any candidate, including publication of statements concerning potential candidates before the close of nominations.
+g. Canvassing voters or advertising the candidature of any prospective candidate before the close of the nominations period.
+h. Endorsing a candidate while being themselves a candidate (a ‘slate’).
+i. Canvassing or advising voters to vote for a particular candidate by the Returning Officer, any incumbent member of the JCR General Committee (who is not themselves a candidate), the President-elect, or Vice President-elect.
+j. Advising particular potential candidates to run or not or to misrepresent a role to potential candidate(s) to affect their decision to nominate by incumbent members of the JCR General Committee or any elected Officer who has not yet taken office.
+k. Deliberate and/or malicious contraventions of the provisions of the Constitution as they apply to elections.
+l. Frivolous or malicious allegations of electoral malpractice.
+m. Failure to report electoral malpractice.
+
+If you witness or suspect any of these things, report it to me via email (with the subject "CONFIDENTIAL COMPLAINT")
+
+Best wishes,
+
+{{ ro_name }}
+JCR Returning Officer

@@ -1,0 +1,86 @@
+\documentclass{header-footer}
+
+\usepackage{hyperref}
+
+\setSJCHeader[1.2cm]{logo.png}%
+{St John's College Junior Common Room Returning Officer}%
+{$<{ term }>$ Term $<{ year }>$ $<{ election_type }>$Election$<{ space_plus_by_election_number }>$%
+%<| if general_election_executive_by_elected_positions != []|>%%
+\ and Executive By-Election%
+%<| endif |>%%
+}%
+{Role Descriptions}
+
+\setSJCFooter{$<{ ro_name }>$, JCR Returning Officer}
+
+\begin{document}
+\renewcommand{\labelenumi}{\Roman{enumi}.}
+
+%<| if general_election_executive_by_elected_positions != []|>%
+This term, a by-election will be held for the following executive position$<{ positions_general_exec_by_plural_s }>$ in the $<{ committee_year }>$ JCR commitee:
+\begin{itemize}\setlength{\itemsep}{2pt}
+    %<| for position in general_election_executive_by_elected_positions |>%
+    \item \hyperlink{$<{ position.id }>$}{$<{ position.full_name }>$}
+    %<| endfor |>%
+\end{itemize}
+
+Election$<{ positions_plural_s }>$ will also be held for: 
+%<| else |>%
+This term, a$<{ non_by_election_n }>$ $<{ by_plus_dash }>$election
+will be held for the following position$<{ positions_plural_s }>$
+in the $<{ committee_year }>$ JCR committee:
+
+%<| endif |>%
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+    %<| for position in positions |>%
+    \item \hyperlink{$<{ position.id }>$}{$<{ position.full_name }>$}
+    %<| endfor |>%
+\end{itemize}
+
+Any member of the JCR may stand for $<{ positions_this_these }>$
+position$<{ positions_plural_s }>$,
+unless $<{ one_of_restrictions }>$the following
+restriction$<{ restrictions_plural_s }>$ applies:
+
+\begin{itemize}\setlength{\itemsep}{2pt}
+    %<| for restriction in restrictions |>%
+    \item $<{ restriction.text }>$
+    %<| endfor |>%
+\end{itemize}
+
+\section*{What do the roles do?}
+The JCR officers are responsible for overseeing and running the JCR.
+They are all part of the JCR General Committee,
+and have a responsibility to make sure that the
+decisions made in JCR meetings are carried out.
+Each officer has a different role: the following descriptions are
+taken from Standing Order Table Two of the JCR Constitution.
+
+\renewcommand{\labelenumii}{\Alph{enumii}.}
+\renewcommand{\labelenumiii}{\alph{enumiii}.}
+\renewcommand{\labelenumiv}{\roman{enumiv}.}
+
+%<| for position in general_election_executive_by_elected_positions |>%
+\hypertarget{$<{ position.id }>$}{}
+\subsection*{The $<{ position.full_name }>$:}
+\begin{enumerate}
+    %<| for description_line in position.description |>%
+    \item $<{ description_line }>$
+    %<| endfor |>%
+\end{enumerate}
+%<| endfor |>%
+
+%<| for position in positions |>%
+\hypertarget{$<{ position.id }>$}{}
+\subsection*{The $<{ position.full_name }>$:}
+\begin{enumerate}
+    %<| for description_line in position.description |>%
+    \item $<{ description_line }>$
+    %<| endfor |>%
+\end{enumerate}
+%<| endfor |>%
+
+\end{document}
+
+

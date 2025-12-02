@@ -1,0 +1,42 @@
+\documentclass{header-footer}
+
+\usepackage{array}
+
+\setSJCHeader[1.2cm]{logo.png}%
+{St John's College Junior Common Room}%
+{$<{ term }>$ Term $<{ year }>$ $<{ election_type }>$Election$<{ space_plus_by_election_number }>$%
+%<| if general_election_executive_by_elected_positions != []|>%%
+\ and Executive By-Election%
+%<| endif |>%%
+}%
+{Notice of Poll}
+
+\setSJCFooter{$<{ ro_name }>$, JCR Returning Officer}
+
+\begin{document}
+
+Notice is hereby given of a poll for the $<{ term_first_letter }>$T $<{ year }>$ $<{ election_type }>$Election of the St. John's College JCR.
+The details of the poll are as follows:
+
+\vspace{2ex}
+
+\setlength{\tabcolsep}{0.5em}
+
+\renewcommand{\arraystretch}{2}
+
+\begin{tabular}{ |c|c|}
+    \hline
+    \textsc{Polling Day} & $<{ polls_open.day }>$ Week $<{ polls_open.week }>$ to $<{ polls_close.day }>$ Week $<{ polls_close.week }>$, $<{ term }>$ Term $<{ year }>$\\
+    \hline
+    \textsc{Polling Hours} & $<{ polls_open.time }>$ $<{ polls_open.day }>$ - $<{ polls_close.time }>$ $<{ polls_close.day }>$ \\
+    \hline
+    \textsc{Polling System} & Link to online vote \\
+    \hline
+
+\end{tabular}
+
+\vspace{2ex}
+
+Any questions regarding this election should be directed to the Returning Officer at jcr-returning@sjc.ox.ac.uk.
+
+\end{document}

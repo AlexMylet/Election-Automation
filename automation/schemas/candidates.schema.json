@@ -1,0 +1,58 @@
+
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/alexmylet/Election-Automation/automation/schemas/candidates.schema.json",
+    "title": "Candidates",
+    "description": "List of candidates for an election (optional - if not provided, assume preparing an election)",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "position_id": {
+                "type": "string"
+            },
+            "name": {
+                "description": "full name, as on bod card",
+                "type": "string"
+            },
+            "mobileNumber": {
+                "type": "string"
+            },
+            "manifestoName": {
+                "description": "name as it will appear in the manifesto booklet",
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },
+            "photoFileName": {
+                "type": "string"
+            },
+            "manifestoTextFileName": {
+                "type": "string"
+            },
+            "manifestoLatexFileName": {
+                "type": "string"
+            },
+            "eligible": {
+                "type": "boolean",
+                "default": true
+            },
+            "multiplePeople": {
+                "type": "boolean",
+                "default": false,
+                "description": "True if multiple people (so appears as 'candidates for', rather than 'candidate for'"
+            },
+            "extraEmails": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "latexSafeManifestoName": {
+                "type": "string"
+            }
+        },
+        "required": ["position_id", "name", "manifestoName", "email", "photoFileName", "manifestoTextFileName", "manifestoLatexFileName", "mobileNumber"]
+    }
+}

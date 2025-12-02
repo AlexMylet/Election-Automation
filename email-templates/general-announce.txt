@@ -1,0 +1,35 @@
+Subject: {{ term_first_letter }}T{{ padded_year_mod_100 }} General Election{{ positions_plural_s }} {%if general_election_executive_by_elected_positions != [] %}and Executive By-Election{{positions_general_exec_by_plural_s}} {% endif %}- Nominations
+
+Dear Members of the JCR,
+
+Nominations for the JCR General Elections open at {{ nominations_open_time.time }} on {{ nominations_open_time.day }}!
+
+All members of the JCR are eligible to nominate themselves, unless any of the restrictions in the nomination form/role descriptions booklet apply.
+{% if general_election_executive_by_elected_positions != [] %}
+{{ positions_general_exec_by_an_e }}xecutive by-election{{ positions_general_exec_by_plural_s }} {{ positions_general_exec_by_is_are }} being held for:
+{% for position in general_election_executive_by_elected_positions %}* {{ position.full_name }}
+{% endfor %}
+General election{{ positions_plural_s }} {{ positions_is_are }} being held for:{% else %}
+The position{{ positions_plural_s }} up for election {{ positions_is_are }}:{% endif %}
+{% for position in positions %}* {{ position.full_name }}
+{% endfor %}
+Descriptions of these roles can be found in the role description booklet attached to this email. If you have any questions about these roles, you can get in contact with the incumbent, whose details can be found on the JCR website at https://jcr.sjc.ox.ac.uk/jcr-democracy/committee/
+
+Nominating yourself is very simple: fill in the attached form, return it by email along with a photo of yourself.
+
+Election timetable:
+
+* Nominations are open until {{ nominations_deadline_time.time }} on {{ nominations_deadline_time.day }} Week {{ nominations_deadline_time.week }} (one week from {{ nominations_open_time.day }})
+* Manifestos/Notice of Poll released on {{ manifestos_release_time.day }} Week {{ manifestos_release_time.week }}
+* Hustings will take place in {{ hustings_time.time }} of {{ hustings_time.day }} Week {{ hustings_time.week }}
+* Elections will take place from {{ polls_open.day }} Week {{ polls_open.week }} (open for 48 hours)
+* Results announced as soon as I have them
+
+Please send any questions to me by email.
+
+All forms of electoral malpractice are strictly prohibited. Please see the Executive election email for more details.
+
+Best wishes,
+
+{{ ro_name }}
+JCR Returning Officer

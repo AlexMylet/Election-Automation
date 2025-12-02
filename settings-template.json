@@ -1,0 +1,25 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "election*.json",
+                "election*.jsonl",
+                "election*.jsonc"
+            ],
+            "url": "./automation/schemas/election.schema.json"
+        },
+        {
+            "fileMatch": ["*restrictions.json"],
+            "url": "./automation/schemas/restrictions.schema.json"
+        },
+        {
+            "fileMatch": ["positions*.json"],
+            "url": "./automation/schemas/positions.schema.json"
+        },
+        {
+            "fileMatch": ["candidates*.json"],
+            "url": "./automation/schemas/candidates.schema.json"
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "latexmk (lualatex)"
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/alexmylet/Election-Automation/automation/schemas/positions.schema.json",
+    "title": "Election roles",
+    "description": "A list of all the positions available for all elections",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string"
+            },
+            "full_name": {
+                "type": "string",
+                "description": "Full name of role (no 'The')."
+            },
+            "description_file": {
+                "type": "string"
+            },
+            "is_exec": {
+                "type": "boolean",
+                "default": false
+            },
+            "position_count": {
+                "type": "integer",
+                "default": 1
+            }
+        },
+        "required": ["id", "full_name", "description_file"]
+    }
+}

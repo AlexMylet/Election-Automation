@@ -1,0 +1,28 @@
+Subject: {{ term_first_letter }}T{{ padded_year_mod_100 }} {{ election_type }}Election{{ space_plus_by_election_number }} {%if general_election_executive_by_elected_positions != [] %}and Executive By-Election{{positions_general_exec_by_plural_s}} {% endif %}- Manifestos & Notice of Poll
+
+Dear Members of the JCR,
+
+The candidates for the {{ term }} Term {{ year }} {{election_type}}Election {%if general_election_executive_by_elected_positions != [] %}and Executive By-Election{{positions_general_exec_by_plural_s}} {% endif %}are as follows:
+{% for pc in positions_with_candidates %}
+*{{ pc[0].full_name }}*:
+{% for candidate in pc[1] %} * {{ candidate.manifesto_name }}
+{% endfor %}{% endfor %}
+{% if positions_without_candidates != [] and positions_without_candidates != None %}Unfortunately, there were no nominations for the following position{{ positions_without_candidates_plural_s }}:
+{% for p in positions_without_candidates %}{{ p.full_name }}
+{% endfor %}{% if type == "general (exec)" %}
+By-elections for these positions will be held alongside the General Election later this term.{% endif %}{% if type == "general (non-exec)" %}
+By-elections for these positions will be held next week/at the start of next term.{% endif %}{% if type == "by-election" %}
+Details on further by-elections for these positions will be shared shortly.{% endif %}{% endif %}
+
+Hustings will be held at {{ hustings_time.time }} on {{ hustings_time.day }} in {{ hustings_location }}.
+
+If you cannot attend and have any questions for me to ask the candidates, please email them to me.
+
+Hustings are minuted, and the minutes will be released when voting opens, at {{ polls_open.time }} on {{ polls_open.day }}.
+
+The notice of poll and manifesto booklet are attached.
+
+Let me know if you have any questions.
+
+{{ ro_name }}
+JCR Returning Officer
