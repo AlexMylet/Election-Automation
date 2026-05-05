@@ -1,6 +1,6 @@
 (WIP - Apologies you'll have to convert dates to actual dates)
 
-Title - {{ term_first_letter }}T {{ padded_year_mod_100 }} {{ election_type }}Election{{ space_plus_by_election_number }}
+Title - {{ term_first_letter }}T{{ padded_year_mod_100 }} {{ election_type }}Election{{ space_plus_by_election_number }}
 
 Display: say Sunday Week {{ polls_open.week }} 00:00 to Monday Week {{ polls_open.week + 1 }} 12:00
 

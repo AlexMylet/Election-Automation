@@ -6,7 +6,7 @@ Dear Members of the JCR,
 
 Nominations for {{ positions_string }} are now open.
 
-Nominating yourself is very simple: fill in the attached form and return it to be email attachment along with a photo of yourself.
+Nominating yourself is very simple: fill in the attached form and return it as an email attachment along with a photo of yourself.
 
 Full timetable:
 
@@ -15,8 +15,6 @@ Full timetable:
 * Hustings will take place on {{ hustings_time.time }} of {{ hustings_time.day }} Week {{ hustings_time.week }}
 * Polls open at {{ polls_open.time }} {{ polls_open.day }} Week {{ polls_open.week }} (open for 48 hours)
 * Results announced as soon as I have them
-
-If you have any potential issues with the hustings timings please let me know and I will try to accommodate this.
 
 As always, all forms of electoral malpractice are strictly prohibited.
 
