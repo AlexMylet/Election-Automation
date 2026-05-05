@@ -4,7 +4,14 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 import json5
-from data_model import Candidate, ElectionDataWithStrings, Position, Restriction, Term
+from data_model import (
+    Candidate,
+    ElectionDataWithStrings,
+    Position,
+    Restriction,
+    Term,
+    Time,
+)
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -22,9 +29,11 @@ def parse_all_positions(
             description = [""]  # Prevent LaTeX errors
 
         # Build data
+        full_name = position["full_name"]
         return Position(
             id=position["id"],
-            full_name=position["full_name"],
+            full_name=full_name,
+            su_platform_name=position.get("su_platform_name", full_name),
             description=description,
             is_exec=position.get("is_exec", False),
             position_count=position.get("position_count", 1),
@@ -115,6 +124,14 @@ def restrictions_in_force(
                 return False
 
     return list(filter(restriction_holds, restrictions))
+
+
+def time_dict_to_time_object(time: dict[str, Any] | None) -> Time | None:
+    if time is None:
+        return None
+    return Time(
+        day=time["day"], week=time.get("week", None), time=time.get("time", None)
+    )
 
 
 def parse_candidates(
@@ -249,12 +266,20 @@ def parse_data(
         committee_year=parsed_election_json.get(
             "committeeYear", year if is_by_election else year + 1
         ),
-        nominations_open_time=parsed_election_json.get("nominationsOpen"),
-        nominations_deadline_time=parsed_election_json.get("nominationsDeadline"),
-        manifestos_release_time=parsed_election_json.get("manifestoReleaseTime"),
-        hustings_time=parsed_election_json.get("hustingsTime"),
-        polls_open=parsed_election_json.get("electionStart"),
-        polls_close=parsed_election_json.get("electionEnd"),
+        nominations_open_time=time_dict_to_time_object(
+            parsed_election_json.get("nominationsOpen")
+        ),
+        nominations_deadline_time=time_dict_to_time_object(
+            parsed_election_json.get("nominationsDeadline")
+        ),
+        manifestos_release_time=time_dict_to_time_object(
+            parsed_election_json.get("manifestoReleaseTime")
+        ),
+        hustings_time=time_dict_to_time_object(
+            parsed_election_json.get("hustingsTime")
+        ),
+        polls_open=time_dict_to_time_object(parsed_election_json.get("electionStart")),
+        polls_close=time_dict_to_time_object(parsed_election_json.get("electionEnd")),
         hustings_location=parsed_election_json.get("hustingsLocation"),
         candidates=candidates,
         justification=parsed_election_json.get("justification"),

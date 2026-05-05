@@ -16,6 +16,7 @@ class Position:
     description: list[
         str
     ]  # Each line is a latex command for doing that bullet point in latex
+    su_platform_name: str
     is_exec: bool = False
     position_count: int = 1
 

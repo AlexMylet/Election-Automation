@@ -11,12 +11,16 @@ from typing import Callable
 
 from data_model import ElectionDataWithStrings
 from data_parser import parse_data_from_paths, write_template_if_have_data
-from election_abbr import ELECTION_ABBREVIATION
+from election_abbr import ELECTION_ABBREVIATION, ELECTION_FILE_EXTENSION
 from templates import create_templates
 
 RO_DIRECTORY = Path(os.getcwd())
 
-DATA_FILE = RO_DIRECTORY / "elections" / f"election-{ELECTION_ABBREVIATION}.jsonc"
+DATA_FILE = (
+    RO_DIRECTORY
+    / "elections"
+    / f"election-{ELECTION_ABBREVIATION}.{ELECTION_FILE_EXTENSION}"
+)
 POSITIONS_FILE = RO_DIRECTORY / "positions" / "positions.json"
 RESTRICTIONS_FILE = RO_DIRECTORY / "sjc-restrictions.json"
 DESCRIPTIONS_DIR = RO_DIRECTORY / "positions" / "descriptions"
