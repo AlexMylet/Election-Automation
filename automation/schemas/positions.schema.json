@@ -24,6 +24,9 @@
             "position_count": {
                 "type": "integer",
                 "default": 1
+            },
+            "su_platform_name": {
+                "type": "string"
             }
         },
         "required": ["id", "full_name", "description_file"]
