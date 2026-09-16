@@ -36,7 +36,8 @@
     {
         "id": "arts",
         "full_name": "Arts Officer",
-        "description_file": "arts.tex"
+        "description_file": "arts.tex",
+        "su_platform_name": "Arts Rep"
     },
     {
         "id": "charities",
@@ -46,12 +47,14 @@
     {
         "id": "dom-sec",
         "full_name": "Domestic Officers",
-        "description_file": "domestic.tex"
+        "description_file": "domestic.tex",
+        "su_platform_name": "Domestic Officer"
     },
     {
         "id": "entz",
         "full_name": "Entertainment Officers",
-        "description_file": "entz.tex"
+        "description_file": "entz.tex",
+        "su_platform_name": "Entertainment Officer"
     },
     {
         "id": "ee",
@@ -82,11 +85,13 @@
         "id": "welfare",
         "full_name": "Welfare Officers",
         "description_file": "welfare.tex",
-        "position_count": 3
+        "position_count": 3,
+        "su_platform_name": "Welfare Officer"
     },
     {
         "id": "women",
-        "full_name": "Women and Gender Equality Officer",
-        "description_file": "women.tex"
+        "full_name": "Women*'s Officer",
+        "description_file": "women.tex",
+        "su_platform_name": "Women's Officer"
     }
 ]
