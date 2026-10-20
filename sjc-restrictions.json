@@ -56,7 +56,7 @@
     {
         "id": "no-union-1",
         "text": "Members who have any position on the following bodies OR any of the following positions are ineligible for nomination to any JCR Officer position:\n\\begin{enumerate}\\setlength{\\itemsep}{1pt}\n\\item Oxford Union Executive Committee (President, Librarian, Treasurer, Secretary)\n\\item Oxford Union Executive Committee Elect (President-Elect, Librarian-Elect, Treasurer-Elect, Secretary-Elect)\n\\item Oxford Union Standing Committee\n\\item Oxford Union Standing Committee Elect\n\\item Oxford Union Senior Appointed Team\n\\item Oxford Union Senior Access Officer\n\\end{enumerate}",
-        "constitution_reference": "Standing Order Table 3A § 2. g. [Broken]",
+        "constitution_reference": "Standing Order Table 3A § 2. h.",
         "rule": {
             "rule_type": "all"
         }
@@ -64,7 +64,7 @@
     {
         "id": "no-union-2",
         "text": "Members who hold a position on the Oxford Union Secretaries Committee are ineligible for nomination for JCR Exec roles.",
-        "constitution_reference": "Standing Order Table 3A § 2. [Broken]",
+        "constitution_reference": "Standing Order Table 3A § 2. i.",
         "rule": {
             "rule_type": "exec"
         },
@@ -72,8 +72,8 @@
     },
     {
         "id": "treasurer",
-        "text": "Members who are Treasurers of a financial beneficiary of the JCR (e.g. Ball Committee), are ineligible for nomination to be JCR Treasurer. ",
-        "constitution_reference": "Standing Order Table 3A § 2. [Broken]",
+        "text": "Members who are Treasurers of a financial beneficiary of the JCR are ineligible for nomination to be JCR Treasurer. ",
+        "constitution_reference": "Standing Order Table 3A § 2. j.",
         "rule": {
             "rule_type": "specific_roles",
             "roles": ["treasurer"]
