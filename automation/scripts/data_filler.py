@@ -11,7 +11,7 @@ from typing import Callable
 
 from data_model import ElectionDataWithStrings
 from data_parser import parse_data_from_paths, write_template_if_have_data
-from election_abbr import ELECTION_ABBREVIATION, ELECTION_FILE_EXTENSION
+from election_abbr import get_election_abbreviation, ELECTION_FILE_EXTENSION
 from templates import create_templates
 
 RO_DIRECTORY = Path(os.getcwd())
@@ -19,15 +19,15 @@ RO_DIRECTORY = Path(os.getcwd())
 DATA_FILE = (
     RO_DIRECTORY
     / "elections"
-    / f"election-{ELECTION_ABBREVIATION}.{ELECTION_FILE_EXTENSION}"
+    / f"election-{get_election_abbreviation()}.{ELECTION_FILE_EXTENSION}"
 )
 POSITIONS_FILE = RO_DIRECTORY / "positions" / "positions.json"
 RESTRICTIONS_FILE = RO_DIRECTORY / "sjc-restrictions.json"
 DESCRIPTIONS_DIR = RO_DIRECTORY / "positions" / "descriptions"
-CANDIDATE_FILE = RO_DIRECTORY / "elections" / f"candidates-{ELECTION_ABBREVIATION}.json"
+CANDIDATE_FILE = RO_DIRECTORY / "elections" / f"candidates-{get_election_abbreviation()}.json"
 if not os.path.exists(CANDIDATE_FILE):
     CANDIDATE_FILE = None  # pyright: ignore[reportConstantRedefinition]
-CANDIDATE_FOLDER = RO_DIRECTORY / "elections" / f"{ELECTION_ABBREVIATION}-candidates"
+CANDIDATE_FOLDER = RO_DIRECTORY / "elections" / f"{get_election_abbreviation()}-candidates"
 if not os.path.exists(CANDIDATE_FOLDER):
     CANDIDATE_FOLDER = None  # pyright: ignore[reportConstantRedefinition]
 
@@ -38,8 +38,8 @@ def setup():
         raise Exception(f"Election data file does not exist (should be at {DATA_FILE})")
 
     # Ensure output directories exists
-    os.makedirs(RO_DIRECTORY / "output" / ELECTION_ABBREVIATION, exist_ok=True)
-    os.makedirs(RO_DIRECTORY / "latex-out" / ELECTION_ABBREVIATION, exist_ok=True)
+    os.makedirs(RO_DIRECTORY / "output" / get_election_abbreviation(), exist_ok=True)
+    os.makedirs(RO_DIRECTORY / "latex-out" / get_election_abbreviation(), exist_ok=True)
 
     # Create symlinks
     try:
@@ -49,8 +49,8 @@ def setup():
                 CANDIDATE_FOLDER,
                 RO_DIRECTORY
                 / "latex-out"
-                / ELECTION_ABBREVIATION
-                / ELECTION_ABBREVIATION,
+                / get_election_abbreviation()
+                / get_election_abbreviation(),
                 target_is_directory=True,
             )
     except FileExistsError:
@@ -61,7 +61,7 @@ def setup():
         try:
             os.symlink(
                 RO_DIRECTORY / "latex-templates" / file_name,
-                RO_DIRECTORY / "latex-out" / ELECTION_ABBREVIATION / file_name,
+                RO_DIRECTORY / "latex-out" / get_election_abbreviation() / file_name,
             )
         except FileExistsError:
             print(
@@ -84,9 +84,9 @@ def main():
         RESTRICTIONS_FILE,
         DESCRIPTIONS_DIR,
         CANDIDATE_FILE,
-        ELECTION_ABBREVIATION,
+        get_election_abbreviation(),
     )
-    for template in create_templates(RO_DIRECTORY, ELECTION_ABBREVIATION):
+    for template in create_templates(RO_DIRECTORY, get_election_abbreviation()):
         if election_data.type in template.elections:
             try:
                 success = write_template_if_have_data(
