@@ -1,3 +1,4 @@
 customtkinter
 jinja2
 json5
+show-in-file-manager
