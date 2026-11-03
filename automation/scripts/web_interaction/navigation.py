@@ -13,7 +13,7 @@ def wait_for_locator_with_page(
 ) -> Callable[Concatenate[Page, str, P], None]:
     @wraps(fn)
     def wrapper(page: Page, locator: str, *args: P.args, **kwargs: P.kwargs) -> None:
-        element = page.locator(locator)
+        element = page.locator(locator).first
         element.wait_for(state="visible", timeout=5000)
         fn(page, element, *args, **kwargs)
 

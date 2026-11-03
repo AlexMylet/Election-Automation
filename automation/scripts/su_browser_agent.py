@@ -68,7 +68,7 @@ if not os.path.exists(CANDIDATE_FOLDER):
     CANDIDATE_FOLDER = None  # pyright: ignore[reportConstantRedefinition]
 
 # Date format: YYYY, M, D
-MONDAY_FIRST_WEEK = date(2026, 4, 27)
+MONDAY_FIRST_WEEK = date(2026, 10, 12)
 
 
 class ElectionDataMissingException(Exception):
@@ -131,7 +131,7 @@ def candidates_fill(page: Page, election_data: ElectionDataWithStrings):
         )
 
         click_first_button_expect_navigation(
-            page, f"div.reorder-list a[title*='{pos.su_platform_name}']"
+            page, f"a[title*='{pos.su_platform_name}']"
         )
 
         # https://www.oxfordsu.org/admin/elections/post/2169/10157/
