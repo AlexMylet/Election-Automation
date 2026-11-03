@@ -11,5 +11,6 @@ latex-out/*
 *.xdv
 *.pdf
 *.pyc
-.vscode/*
+.vscode
 .~lock*.docx#
+.venv

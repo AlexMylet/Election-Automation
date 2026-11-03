@@ -1,1 +1,3 @@
+customtkinter
+jinja2
 json5
