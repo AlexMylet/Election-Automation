@@ -1,7 +1,7 @@
 [
     {
         "id": "women",
-        "text": "Candidates for the position of Women's Officer must identify wholly or partly as a woman or transfeminine.",
+        "text": "Candidates for the position of Women*'s Officer must identify wholly or partly as a woman or transfeminine.",
         "constitution_reference": "Standing Order Table 3A § 2. a.",
         "rule": {
             "rule_type": "specific_roles",
