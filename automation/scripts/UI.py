@@ -1,18 +1,17 @@
 import datetime
-from enum import Enum, auto
+import json
 import os
-from pathlib import Path
 import subprocess
-from typing import Any, Callable, Optional
 import webbrowser
+from enum import Enum, auto
+from pathlib import Path
+from typing import Any, Callable, Optional
 
 import customtkinter as ctk
-import json
-
-# from automation.scripts import data_filler
-from lib.abbr_recommender import suggest_abbr_data
+import data_filler
 from data_model import ElectionType, Term
 from election_abbr import get_election_abbreviation, write_election_abbreviation
+from lib.abbr_recommender import suggest_abbr_data
 from showinfm import show_in_file_manager
 
 NoDataButtonData = tuple[str, Callable[[], Any]]
@@ -285,7 +284,7 @@ class App(ctk.CTk):
         self.elements = []
 
         self.title("Election Automation")
-        self.geometry("1000x600")
+        self.geometry("1200x800")
         self.main_page_setup()
 
         self.state_transitions: dict[tuple[AppState, AppState], Callable[[], None]] = {
@@ -403,15 +402,43 @@ class App(ctk.CTk):
         )
         self.candidates_file.grid(row=3, column=0, padx=20, pady=20)
 
-        self.button = ctk.CTkButton(self, text="submit", command=self.button_callback)
-        self.button.grid(row=4, column=0, padx=20, pady=20)
+        self.output_folders = TextWithButtonsFrame(
+            self,
+            "Output folders",
+            [
+                (
+                    "Open output folder for this election (create if it does not exist)",
+                    lambda: open_or_create_and_open_folder(
+                        RO_DIRECTORY / "output" / get_election_abbreviation(),
+                        check_folder_existence(
+                            RO_DIRECTORY / "output" / get_election_abbreviation()
+                        ),
+                    ),
+                ),
+                (
+                    "Open latex output folder for this election (create if it does not exist)",
+                    lambda: open_or_create_and_open_folder(
+                        RO_DIRECTORY / "latex-out" / get_election_abbreviation(),
+                        check_folder_existence(
+                            RO_DIRECTORY / "latex-out" / get_election_abbreviation()
+                        ),
+                    ),
+                ),
+            ],
+        )
+        self.output_folders.grid(row=4, column=0, padx=20, pady=20)
+
+        self.data_filler_button = ctk.CTkButton(
+            self, text="Run Data Filler", command=self.run_data_filler
+        )
+        self.data_filler_button.grid(row=5, column=0, padx=20, pady=20)
 
         self.elements: list[ctk.CTkBaseClass] = [
             self.election_abbreviation,
             self.election_file,
             self.candidates_folder,
             self.candidates_file,
-            self.button,
+            self.data_filler_button,
         ]
 
     def update_state(self, intended_state: AppState) -> bool:
@@ -423,8 +450,9 @@ class App(ctk.CTk):
             self.app_state = intended_state
             return True
 
-    def button_callback(self):
-        print("button clicked")
+    def run_data_filler(self):
+        data_filler.setup()
+        data_filler.main()
 
     def initial_to_abbr_update(self) -> None:
         self.clear_window()
