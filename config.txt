@@ -1,1 +1,1 @@
-abbr=MT26-E
+abbr=MT26-G
