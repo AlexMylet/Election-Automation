@@ -1,5 +1,4 @@
 import datetime
-import json
 import os
 import subprocess
 import webbrowser
@@ -12,6 +11,10 @@ import data_filler
 from data_model import ElectionType, Term
 from election_abbr import get_election_abbreviation, write_election_abbreviation
 from lib.abbr_recommender import suggest_abbr_data
+from lib.file_handling import (
+    check_file_existence,
+    create_file_and_write_json,
+)
 from showinfm import show_in_file_manager
 
 NoDataButtonData = tuple[str, Callable[[], Any]]
@@ -30,13 +33,18 @@ class TextWithButtonsFrame(ctk.CTkFrame):
         self.text.grid(row=0, column=0, padx=20, pady=20)
         self.buttons: list[ctk.CTkButton] = []
         for i, button_data in enumerate(buttons_data):
-            self.buttons.append(
-                ctk.CTkButton(self, text=button_data[0], command=button_data[1])
+            new_button = ctk.CTkButton(
+                self, text=button_data[0], command=button_data[1]
             )
-            self.buttons[i].grid(row=0, column=i + 1, padx=20, pady=20)
+            self.buttons.append(new_button)
+            new_button.grid(row=0, column=i + 1, padx=20, pady=20)
 
     def update_text(self, new_text: str):
         self.text.configure(text=new_text)
+
+    def update_buttons_text(self, new_texts: list[str]):
+        for button, new_text in zip(self.buttons, new_texts):
+            button.configure(text=new_text)
 
 
 class ElectionAbbrBuilderFrame(ctk.CTkFrame):
@@ -149,131 +157,210 @@ RO_DIRECTORY = Path(os.getcwd())
 
 
 def check_election_file_existence(current_abbr: str) -> bool:
-    try:
-        fp = open(RO_DIRECTORY / "elections" / f"election-{current_abbr}.json")
-    except OSError:
-        return False
-    else:
-        fp.close()
-        return True
+    return check_file_existence(
+        RO_DIRECTORY / "elections" / f"election-{current_abbr}.json"
+    )
 
 
 def check_candidates_file_existence(current_abbr: str) -> bool:
-    try:
-        fp = open(RO_DIRECTORY / "elections" / f"candidates-{current_abbr}.json")
-    except OSError:
-        return False
-    else:
-        fp.close()
-        return True
+    return check_file_existence(
+        RO_DIRECTORY / "elections" / f"candidates-{current_abbr}.json"
+    )
 
 
 def check_folder_existence(folder_path: Path) -> bool:
     return folder_path.exists()
 
 
-def create_election_file_with_sensible_defaults(current_abbr: str) -> None:
-    with open(
-        RO_DIRECTORY / "elections" / f"election-{current_abbr}.json", "x"
-    ) as election_file:
-        print("Election file created")
-    with open(
-        RO_DIRECTORY / "elections" / f"election-{current_abbr}.json", "w"
-    ) as election_file:
-        election_number = None
-        match current_abbr[5]:
-            case "E":
-                election_type = "exec"
-            case "G":
-                election_type = "general"
-            case "B":
-                election_type = "by-election"
-                election_number = int(current_abbr[7:])
-            case _:
-                raise ValueError("Invalid election abbr")
-
-        match current_abbr[0]:
-            case "M":
-                election_term = "Michaelmas"
-            case "H":
-                election_term = "Hilary"
-            case "T":
-                election_term = "Trinity"
-            case _:
-                raise ValueError("Invalid election abbr")
-
-        year_mod_100 = int(current_abbr[2:4])
-        current_year = datetime.date.today().year
-        # Least year after current year with year_mod_100 as the year_mod_100
-        if current_year % 100 <= year_mod_100:
-            election_year = (current_year // 100) * 100 + year_mod_100
-        else:
-            election_year = (current_year // 100) * 100 + year_mod_100 + 100
-
-        data: dict[str, Any] = {
-            "roName": "[Add your name here]",
-            "type": election_type,
-            "term": election_term,
-            "year": election_year,
-        }
-        if election_number is not None:
-            data["number"] = election_number
-
-        json.dump(data, election_file, indent=4)
+def elections_file_path(abbr: str):
+    return RO_DIRECTORY / "elections" / f"election-{abbr}.json"
 
 
-def create_candidates_file_with_sensible_defaults(current_abbr: str) -> None:
-    with open(
-        RO_DIRECTORY / "elections" / f"candidates-{current_abbr}.json", "x"
-    ) as candidates_file:
-        print("Candidates file created")
-    with open(
-        RO_DIRECTORY / "elections" / f"candidates-{current_abbr}.json", "w"
-    ) as candidates_file:
-        data = []
-        json.dump(data, candidates_file, indent=4)
+@create_file_and_write_json(elections_file_path)
+def create_election_file_with_sensible_defaults(current_abbr: str) -> dict[str, Any]:
+    election_number = None
+    match current_abbr[5]:
+        case "E":
+            election_type = "exec"
+        case "G":
+            election_type = "general"
+        case "B":
+            election_type = "by-election"
+            election_number = int(current_abbr[7:])
+        case _:
+            raise ValueError("Invalid election abbr")
+
+    match current_abbr[0]:
+        case "M":
+            election_term = "Michaelmas"
+        case "H":
+            election_term = "Hilary"
+        case "T":
+            election_term = "Trinity"
+        case _:
+            raise ValueError("Invalid election abbr")
+
+    year_mod_100 = int(current_abbr[2:4])
+    current_year = datetime.date.today().year
+    # Least year after current year with year_mod_100 as the year_mod_100
+    if current_year % 100 <= year_mod_100:
+        election_year = (current_year // 100) * 100 + year_mod_100
+    else:
+        election_year = (current_year // 100) * 100 + year_mod_100 + 100
+
+    data: dict[str, Any] = {
+        "roName": "[Add your name here]",
+        "type": election_type,
+        "term": election_term,
+        "year": election_year,
+    }
+    if election_number is not None:
+        data["number"] = election_number
+    if election_type == "by-election":
+        data["positions"] = []
+    return data
 
 
-class OpenTool(Enum):
+def candidates_file_path(abbr: str):
+    return RO_DIRECTORY / "elections" / f"candidates-{abbr}.json"
+
+
+@create_file_and_write_json(candidates_file_path)
+def create_candidates_file_with_sensible_defaults(current_abbr: str) -> list[Any]:
+    return []
+
+
+class FileOpenTool(Enum):
     WEBBROWSER = auto()
     VSCODE = auto()
 
 
-def open_or_create_and_open(
-    current_abbr: str, election_file_exists: bool, tool: OpenTool
+def open_or_create_and_open_file(
+    current_abbr: str,
+    path: Path,
+    tool: FileOpenTool,
+    election_abbr_based_default_file_creator: Callable[[str], None],
+    on_file_creation: Optional[Callable[[], None]] = None,
 ) -> None:
-    if not election_file_exists:
-        create_election_file_with_sensible_defaults(current_abbr)
-        # TODO - update the UI to reflect the fact that the file now exists
-    file_path = str(RO_DIRECTORY / "elections" / f"election-{current_abbr}.json")
-    if tool == OpenTool.WEBBROWSER:
+    if not check_file_existence(path):
+        election_abbr_based_default_file_creator(current_abbr)
+        if on_file_creation is not None:
+            on_file_creation()
+    file_path = str(path)
+    if tool == FileOpenTool.WEBBROWSER:
         # With thanks to Gemini
         webbrowser.open(file_path)
-    elif tool == OpenTool.VSCODE:
+    elif tool == FileOpenTool.VSCODE:
         subprocess.run(["code", file_path])
 
 
-def open_or_create_and_open_folder(path: Path, folder_exists: bool) -> None:
-    if not folder_exists:
+def open_or_create_and_open_folder(
+    path: Path,
+    on_folder_creation: Optional[Callable[[], None]] = None,
+) -> None:
+    if not check_folder_existence(path):
         # Create
         os.makedirs(path)
-        # TODO - Update UI
+        if on_folder_creation is not None:
+            on_folder_creation()
 
     show_in_file_manager(str(path))
 
 
-def open_or_create_and_open_candidates(
-    current_abbr: str, candidates_file_exists: bool, tool: OpenTool
-) -> None:
-    if not candidates_file_exists:
-        create_candidates_file_with_sensible_defaults(current_abbr)
-        # TODO - update the UI to reflect the fact that the file now exists
-    file_path = str(RO_DIRECTORY / "elections" / f"candidates-{current_abbr}.json")
-    if tool == OpenTool.WEBBROWSER:
-        # With thanks to Gemini
-        webbrowser.open(file_path)
-    elif tool == OpenTool.VSCODE:
-        subprocess.run(["code", file_path])
+def create_text_with_button_frames_for_file_opening(
+    master: ctk.CTk | ctk.CTkFrame,
+    file_name: Callable[[], str],
+    path_generator: Callable[[str], Path],
+    type_of_file: str,
+    file_creator: Callable[[str], None],
+) -> TextWithButtonsFrame:
+    path = path_generator(get_election_abbreviation())
+    file_exists = check_file_existence(path)
+
+    def open_or_create_and_open_file_lambda(toolValue: int):
+        def inner():
+            open_or_create_and_open_file(
+                get_election_abbreviation(),
+                path_generator(get_election_abbreviation()),
+                FileOpenTool(toolValue),
+                file_creator,
+                frame.update_buttons_text(
+                    [
+                        f"Open {type_of_file} (using {description})"
+                        for description in ["System Default", "VS Code"]
+                    ]
+                ),
+            )
+
+        return inner
+
+    frame = TextWithButtonsFrame(
+        master,
+        file_name(),
+        [
+            (
+                (
+                    f"Open {type_of_file} (using {description})"
+                    if file_exists
+                    else f"Create {type_of_file} with sensible defaults and open (using {description})"
+                ),
+                open_or_create_and_open_file_lambda(tool.value),
+            )
+            for tool, description in [
+                (FileOpenTool.WEBBROWSER, "System Default"),
+                (FileOpenTool.VSCODE, "VS Code"),
+            ]
+        ],
+    )
+    return frame
+
+
+def create_text_with_button_frames_for_folders_opening(
+    master: ctk.CTk | ctk.CTkFrame,
+    text: Callable[[], str],
+    path_generators: Callable[[str], list[Path]],
+    types_of_folders: list[str],
+) -> TextWithButtonsFrame:
+    def open_or_create_and_open_folder_lambda(stringified_path: str):
+        def inner():
+            open_or_create_and_open_folder(
+                Path(stringified_path),
+                frame.update_buttons_text(
+                    [
+                        (
+                            f"Open {type_of_folder}"
+                            if check_folder_existence(path)
+                            else f"Create {type_of_folder} and open"
+                        )
+                        for type_of_folder, path in zip(
+                            types_of_folders,
+                            path_generators(get_election_abbreviation()),
+                        )
+                    ]
+                ),
+            )
+
+        return inner
+
+    frame = TextWithButtonsFrame(
+        master,
+        text(),
+        [
+            (
+                (
+                    f"Open {type_of_folder}"
+                    if check_folder_existence(path)
+                    else f"Create {type_of_folder} and open"
+                ),
+                open_or_create_and_open_folder_lambda(str(path)),
+            )
+            for type_of_folder, path in zip(
+                types_of_folders, path_generators(get_election_abbreviation())
+            )
+        ],
+    )
+
+    return frame
 
 
 class App(ctk.CTk):
@@ -306,39 +393,14 @@ class App(ctk.CTk):
         )
         self.election_abbreviation.grid(row=0, column=0, padx=20, pady=20)
 
-        election_file_exists = check_election_file_existence(
-            get_election_abbreviation()
-        )
-        self.election_file = TextWithButtonsFrame(
+        self.election_file = create_text_with_button_frames_for_file_opening(
             self,
-            f"election-{get_election_abbreviation()}.json",
-            [
-                (
-                    (
-                        "Open (for editing, using system default for JSON files)"
-                        if election_file_exists
-                        else "Create election file with sensible defaults and edit"
-                    ),
-                    lambda: open_or_create_and_open(
-                        get_election_abbreviation(),
-                        election_file_exists,
-                        OpenTool.WEBBROWSER,
-                    ),
-                ),
-                (
-                    (
-                        "Open (for editing, using VS Code)"
-                        if election_file_exists
-                        else "Create election file with sensible defaults and edit"
-                    ),
-                    lambda: open_or_create_and_open(
-                        get_election_abbreviation(),
-                        election_file_exists,
-                        OpenTool.VSCODE,
-                    ),
-                ),
-            ],
+            lambda: f"election-{get_election_abbreviation()}.json",
+            elections_file_path,
+            "election file",
+            create_election_file_with_sensible_defaults,
         )
+
         self.election_file.grid(row=1, column=0, padx=20, pady=20)
 
         candidates_folder_name = lambda: f"{get_election_abbreviation()}-candidates"
@@ -346,85 +408,31 @@ class App(ctk.CTk):
             RO_DIRECTORY / "elections" / candidates_folder_name()
         )
 
-        self.candidates_folder = TextWithButtonsFrame(
+        self.candidates_folder = create_text_with_button_frames_for_folders_opening(
             self,
-            candidates_folder_name(),
-            [
-                (
-                    (
-                        "Open folder"
-                        if candidates_folder_exists
-                        else "Create and open folder"
-                    ),
-                    lambda: open_or_create_and_open_folder(
-                        RO_DIRECTORY / "elections" / candidates_folder_name(),
-                        candidates_folder_exists,
-                    ),
-                )
-            ],
+            lambda: "Candidates folder",
+            lambda abbr: [RO_DIRECTORY / "elections" / f"{abbr}-candidates"],
+            ["Candidates folder"],
         )
         self.candidates_folder.grid(row=2, column=0, padx=20, pady=20)
 
-        candidates_file_name = lambda: f"candidates-{get_election_abbreviation()}.json"
-        candidates_file_exists = check_candidates_file_existence(
-            get_election_abbreviation()
-        )
-
-        self.candidates_file = TextWithButtonsFrame(
+        self.candidates_file = create_text_with_button_frames_for_file_opening(
             self,
-            candidates_file_name(),
-            [
-                (
-                    (
-                        "Open (for editing, using system default for JSON files)"
-                        if candidates_file_exists
-                        else "Create election file with sensible defaults and edit"
-                    ),
-                    lambda: open_or_create_and_open_candidates(
-                        get_election_abbreviation(),
-                        candidates_file_exists,
-                        OpenTool.WEBBROWSER,
-                    ),
-                ),
-                (
-                    (
-                        "Open (for editing, using VS Code)"
-                        if election_file_exists
-                        else "Create election file with sensible defaults and edit"
-                    ),
-                    lambda: open_or_create_and_open_candidates(
-                        get_election_abbreviation(),
-                        candidates_file_exists,
-                        OpenTool.VSCODE,
-                    ),
-                ),
-            ],
+            lambda: f"candidates-{get_election_abbreviation()}.json",
+            candidates_file_path,
+            "candidates info file",
+            create_candidates_file_with_sensible_defaults,
         )
         self.candidates_file.grid(row=3, column=0, padx=20, pady=20)
 
-        self.output_folders = TextWithButtonsFrame(
+        self.output_folders = create_text_with_button_frames_for_folders_opening(
             self,
-            "Output folders",
-            [
-                (
-                    "Open output folder for this election (create if it does not exist)",
-                    lambda: open_or_create_and_open_folder(
-                        RO_DIRECTORY / "output" / get_election_abbreviation(),
-                        check_folder_existence(
-                            RO_DIRECTORY / "output" / get_election_abbreviation()
-                        ),
-                    ),
-                ),
-                (
-                    "Open latex output folder for this election (create if it does not exist)",
-                    lambda: open_or_create_and_open_folder(
-                        RO_DIRECTORY / "latex-out" / get_election_abbreviation(),
-                        check_folder_existence(
-                            RO_DIRECTORY / "latex-out" / get_election_abbreviation()
-                        ),
-                    ),
-                ),
+            lambda: "Output folders",
+            lambda abbr: [
+                RO_DIRECTORY / "output" / abbr,
+                RO_DIRECTORY / "latex-out" / abbr,
             ],
+            ["Non-LaTeX output", "LaTeX output"],
         )
         self.output_folders.grid(row=4, column=0, padx=20, pady=20)
 
@@ -438,6 +446,7 @@ class App(ctk.CTk):
             self.election_file,
             self.candidates_folder,
             self.candidates_file,
+            self.output_folders,
             self.data_filler_button,
         ]
 
